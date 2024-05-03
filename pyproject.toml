@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "microservices"
+version = "0.1.0"
+description = "The microservices, mainly lambdas which will run Cropmind backend."
+authors = ["Jordan <a.j.chabowski@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.2.0"
+black = "^24.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
