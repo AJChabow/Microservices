@@ -1,7 +1,7 @@
 # lambda_function.py
 import json
 import os
-from irrigation_handler.helpers import (
+from helpers import (
     percent_shaded_area, load_crop_data, get_weather_data, calculate_net_evapotranspiration,
     calculate_effective_precipitation, calculate_irrigation_needs, calculate_irrigation_rate_and_time
 )

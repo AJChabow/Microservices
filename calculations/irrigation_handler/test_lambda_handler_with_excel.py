@@ -1,12 +1,12 @@
 import json
 import pytest
-from irrigation_handler.lambda_function import lambda_handler
+from lambda_function import lambda_handler
 import pandas as pd
 
 @pytest.fixture
 def excel_test_cases():
     """Loads test cases from the Excel file"""
-    test_cases_path = 'irrigation_handler/unit_tests_for_riego_ivia.xlsx'
+    test_cases_path = 'unit_tests_for_riego_ivia.xlsx'
     df = pd.read_excel(test_cases_path)
     return df
 
