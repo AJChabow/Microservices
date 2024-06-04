@@ -4,25 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e86b0321-a04a-4359-a5fb-cd4487b2e240" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../calculations/irrigation_handler/create_deployment_package.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../calculations/irrigation_handler/deployment_lam_package.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../calculations/irrigation_handler/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../calculations/irrigation_handler/test_lambda_function.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../calculations/irrigation_handler/test_lambda_handler_with_excel.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/prettier.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/data-entry/+page.server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../calculations/irrigation_handler/irr_handler.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../calculations/irrigation_handler/lambda_function.py" beforeDir="false" afterPath="$PROJECT_DIR$/../calculations/irrigation_handler/lambda_function.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../calculations/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../calculations/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../calculations/test_lambda_function.py" beforeDir="false" afterPath="$PROJECT_DIR$/../calculations/test_lambda_function.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../calculations/test_lambda_handler_with_excel.py" beforeDir="false" afterPath="$PROJECT_DIR$/../calculations/test_lambda_handler_with_excel.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../calculations/unit_tests_for_riego_ivia.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/../calculations/irrigation_handler/unit_tests_for_riego_ivia.xlsx" afterDir="false" />
+    <list default="true" id="e86b0321-a04a-4359-a5fb-cd4487b2e240" name="Changes" comment="idk">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/+page.svelte" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/data-entry/+page.svelte" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/data-entry/+page.svelte" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +53,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ajcha/Microservices/ui&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/ajcha/Microservices/calculations&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -74,7 +61,7 @@
     &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\ajcha\\Microservices\\ui\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -106,11 +93,26 @@
       <workItem from="1716720500471" duration="4573000" />
       <workItem from="1716914112060" duration="29000" />
       <workItem from="1716914376566" duration="5970000" />
-      <workItem from="1717234456675" duration="9090000" />
+      <workItem from="1717234456675" duration="21329000" />
+      <workItem from="1717520337855" duration="1211000" />
+      <workItem from="1717531728324" duration="4866000" />
     </task>
+    <task id="LOCAL-00001" summary="idk">
+      <option name="closed" value="true" />
+      <created>1717329650702</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1717329650702</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="idk" />
+    <option name="LAST_COMMIT_MESSAGE" value="idk" />
   </component>
 </project>

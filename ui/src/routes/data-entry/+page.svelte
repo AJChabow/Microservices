@@ -9,24 +9,25 @@
     const db = getFirestore();
     let authenticated = false;
     let crop = '';
-    let diameterOfTreeCover = '';
-    let distanceBetweenCrops = '';
-    let distanceBetweenRows = '';
-    let installationEfficiency = '';
-    let numberOfEmitters = '';
-    let plotCoefficient = '';
-    let unitFlowRate = '';
+    let diameterOfTreeCover: number;
+    let distanceBetweenCrops: number;
+    let distanceBetweenRows: number;
+    let installationEfficiency = writable("");
+    let numberOfEmitters: number;
+    let plotCoefficient = 0;
+    let unitFlowRate: number;
     let loading = false;
-    export let data
 
     // New variables for WhatsApp message
     let recipientName = '';
     let recipientNumber = '';
-
+    export let data;
     onMount(() => {
         auth.onAuthStateChanged((user) => {
             if (user) {
                 authenticated = true;
+                const uid = user.uid;
+                console.log(uid)
             } else {
                 goto('/login');
             }
@@ -54,20 +55,29 @@
                 createdAt: new Date()
             });
             alert('Data submitted successfully!');
-            // Reset the form
-            crop = '';
-            diameterOfTreeCover = '';
-            distanceBetweenCrops = '';
-            distanceBetweenRows = '';
-            installationEfficiency = '';
-            numberOfEmitters = '';
-            plotCoefficient = '';
-            unitFlowRate = '';
+            await sendMessage();
         } catch (e) {
             console.error('Error adding document: ', e);
             alert('Error submitting data. Please try again.');
         } finally {
             loading = false;
+        }
+    }
+
+    async function sendMessage() {
+        const accountSid = 'your_account_sid';
+        const authToken = 'your_auth_token';
+        const client = require('twilio')(accountSid, authToken);
+
+        try {
+            const message = await client.messages.create({
+                body: 'Your data has been submitted successfully!',
+                from: '+1234567890', // TODO remove hardcode
+                to: '+0987654321' // TODO add whatever number is put in here
+            });
+            console.log('Message sent:', message.sid);
+        } catch (e) {
+            console.error('Error sending message: ', e);
         }
     }
 
@@ -79,7 +89,7 @@
         try {
             const message = await client.messages.create({
                 body: `Hello ${recipientName}, this is a test WhatsApp message!`,
-                from: 'whatsapp:+18333687504', // Your Twilio WhatsApp number TODO remove hardcode
+                from: 'whatsapp:+18333687504', // Your Twilio WhatsApp number
                 to: `whatsapp:${recipientNumber}`
             });
             console.log('WhatsApp message sent:', message.sid);
@@ -89,6 +99,22 @@
             alert('Error sending WhatsApp message. Please try again.');
         }
     }
+
+    import {Alert} from 'flowbite-svelte';
+    import {writable} from 'svelte/store';
+
+
+    let showAdvanced = writable(false);
+    let efficiency: number = 50;
+    $: irrigationEfficiency = efficiency / 100;
+    let emittersPerMeter: number;
+    $: numberOfEmitters = emittersPerMeter * distanceBetweenCrops
+
+    function toggleAdvanced() {
+        showAdvanced.update(n => !n);
+    }
+
+    import {Select, Label, Input, Range, Button} from 'flowbite-svelte';
 </script>
 
 <style>
@@ -109,82 +135,100 @@
             transform: rotate(360deg);
         }
     }
+
+    .input-container {
+        justify-content: space-between;
+        display: flex;
+        align-items: center;
+    }
+
+    .border {
+        border: 1px solid #ccc;
+    }
 </style>
 
 {#if authenticated}
+
     <main class="p-8 max-w-md mx-auto bg-white rounded-lg shadow-md">
-        <h1 class="text-2xl font-bold mb-4">Edit Field</h1>
+        <h1 class="text-2xl font-bold mb-4">Data Entry</h1>
         <form on:submit={handleSubmit} class="space-y-4">
             <div>
-
-                <label for="crop" class="block text-sm font-medium text-gray-700">Crop (e.g., Ciruelo)</label>
-                <select bind:value={crop} class="border-gray-400 border-2 rounded-md">
-                    {#each data.crops as crop, i}
-                        <option class="block text-sm font-medium text-gray-700">
-                            {crop}
-                        </option>
+                <Label for="crop" class="block text-sm font-medium text-gray-700">Crop (e.g., Ciruelo)</Label>
+                <Select id="crop" bind:value={crop}
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    {#each data.crops as crop}
+                        <option>{crop}</option>
                     {/each}
-                </select>
+                </Select>
             </div>
+            <div class="input-container">
+                <label for="meterInput">Diameter of tree cover (meters):</label>
+                <Input placeholder="0" bind:value={diameterOfTreeCover} id="meterInput" type="number" min="0" max="20"
+                       step="0.5"
+                       class="w-16 mt-1 border"/>
+            </div>
+            <div class="input-container">
+                <label for="meterInput">Distance between rows (meters):</label>
+                <Input placeholder="0" bind:value={distanceBetweenRows} id="meterInput" type="number" min="0" max="20"
+                       step="0.5"
+                       class="w-16 mt-1 border"/>
+            </div>
+            <div class="input-container">
+                <label for="meterInput">Distance between trees (meters):</label>
+                <Input placeholder="0" bind:value={distanceBetweenCrops} id="meterInput" type="number" min="0" max="20"
+                       step="0.5"
+                       class="w-16 mt-1 border"/>
+            </div>
+            <div class="input-container">
+                <label for="meterInput">Irrigation Efficiency:</label>
+                {#if !$showAdvanced}
+                    <div class:showAdvanced={false}>
+                        <Button class="w-16" size="xs" outline color="blue" type="button"
+                                on:click={() => efficiency=80}>Sprinkler
+                            (80%)
+                        </Button>
+                        <Button class="w-16" size="xs" outline color="green" type="button"
+                                on:click={() => efficiency=95}>Drip
+                            (95%)
+                        </Button>
+                    </div>
+                    <Button color="none" outline size="sm" type="button" on:click={toggleAdvanced}>Advanced</Button>
+                {/if}
 
-            <div>
-                <label for="diameterOfTreeCover" class="block text-sm font-medium text-gray-700">Diameter of Tree Cover
-                    (meters)</label>
-                <input id="diameterOfTreeCover" type="number" bind:value={diameterOfTreeCover} max="30" min="0"
-                       step="0.5"
-                       class="max-w-10  mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"/>
+
+                {#if $showAdvanced}
+
+                    <Range size="sm" min="0" max="100" bind:value={efficiency} step="5"/>
+                    <p>{efficiency} %</p>
+                    <Button color="none" size="sm" type="button" on:click={toggleAdvanced}>Standard</Button>
+                {/if}
             </div>
-            <div>
-                <span
-                        for="distanceBetweenCrops" class="block text-sm font-medium text-gray-700">Distance Between Crops
-                    (meters)</span>
-                <input id="distanceBetweenCrops" type="number" bind:value={distanceBetweenCrops} max="30" min="0"
-                       step="0.5"
-                       class=" max-w-10 mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"/>
+            <div class="input-container">
+                <label for="meterInput">Irrigation Emitters per meter:</label>
+                <Input placeholder="0" bind:value={emittersPerMeter} id="meterInput" type="number" min="0" max="20"
+                       step="1"
+                       class="w-16 mt-1 border"/>
             </div>
-            <div>
-                <label for="distanceBetweenRows" class="block text-sm font-medium text-gray-700">Distance Between Rows
-                    (meters)</label>
-                <input id="distanceBetweenRows" type="text" bind:value={distanceBetweenRows}
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"/>
+            <div class="input-container">
+                <label for="meterInput">Flow Rate per Emitter (L/h):</label>
+                <Input placeholder="0" bind:value={unitFlowRate} id="meterInput" type="number" min="0" max="200"
+                       step="10"
+                       class="w-16 mt-1 border"/>
             </div>
-            <div>
-                <label for="installationEfficiency" class="block text-sm font-medium text-gray-700">Installation
-                    Efficiency (0-1)</label>
-                <input id="installationEfficiency" type="text" bind:value={installationEfficiency}
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"/>
-            </div>
-            <div>
-                <label for="numberOfEmitters" class="block text-sm font-medium text-gray-700">Number of Emitters</label>
-                <input id="numberOfEmitters" type="text" bind:value={numberOfEmitters}
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"/>
-            </div>
-            <div>
-                <label for="plotCoefficient" class="block text-sm font-medium text-gray-700">Plot Coefficient
-                    (0-1)</label>
-                <input id="plotCoefficient" type="text" bind:value={plotCoefficient}
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"/>
-            </div>
-            <div>
-                <label for="unitFlowRate" class="block text-sm font-medium text-gray-700">Unit Flow Rate
-                    (liters/hour)</label>
-                <input id="unitFlowRate" type="text" bind:value={unitFlowRate}
-                       class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"/>
-            </div>
-            <button type="submit"
-                    class="w-full bg-indigo-600 text-white py-2 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2">
+            <Button outline type="submit"
+                    class="w-full bg-indigo-600 text-white py-2 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 Submit
-            </button>
+            </Button>
         </form>
         {#if loading}
             <div class="flex justify-center mt-4">
                 <div class="spinner"></div>
             </div>
         {/if}
-        <button on:click={logout}
+        <Button on:click={logout}
                 class="mt-4 w-full bg-red-600 text-white py-2 rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
             Logout
-        </button>
+        </Button>
 
         <!-- New section for sending WhatsApp message -->
         <section class="mt-8">
