@@ -82,8 +82,6 @@
     }
 
     async function sendWhatsAppMessage() {
-        const accountSid = 'ACcbc5e54b47023884dde508e69bcf9ad1';
-        const authToken = '39894f87671514d4b5dc307a9f5fb462';
         const client = require('twilio')(accountSid, authToken);
 
         try {
