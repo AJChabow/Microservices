@@ -79,7 +79,7 @@
                     polygon: fieldPolygon,
                     createdAt: new Date()
                 };
-                
+
                 await setDoc(doc(db, "users", uid, "fields", currentField.id), fieldData, {merge: true});
                 alert('Data submitted successfully!');
                 await fetchSavedFields(uid);
